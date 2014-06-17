@@ -1,0 +1,71 @@
+#!/usr/bin/python
+
+import argparse
+import copy
+import json
+import os
+import sys
+import yaml
+
+def dict_merge(current, additions):
+  new = copy.deepcopy(current)
+
+  for key, value in additions.iteritems():
+    if key in new and isinstance(new[key], dict):
+      new[key] = dict_merge(new[key], value)
+    else:
+      new[key] = copy.deepcopy(value)
+
+  return new
+
+def parse_commandline():
+  parser = argparse.ArgumentParser(description='Convert YAML to JSON')
+  parser.add_argument('-d', '--debug', action='store_true',
+    help='Print JSON data to STDOUT')
+  parser.add_argument('-o', '--outputfile', required=True,
+    help='The JSON file to write')
+  parser.add_argument('-s', '--sourcedir', required=True,
+    help='The directory with YAML files to combine')
+  args = parser.parse_args()
+  return args
+
+def get_yaml_files(dir):
+  files = []
+
+  for file in os.listdir(dir):
+    if file.endswith('.yaml'):
+      files.append(os.path.join(dir, file))
+
+  return files
+
+def read_yaml_from_files(files):
+  data = {}
+
+  for file in files:
+    yamldata = open(file, 'r')
+    newdata = yaml.load(yamldata)
+    data = dict_merge(data, newdata)
+
+  return data
+
+def write_json_to_file(data, file):
+  with open(file, 'w') as outfile:
+    json.dump(data, outfile)
+
+def write_json_to_stdout(data):
+  print json.dumps(data, indent=4, separators=(',', ': '))
+
+if __name__ == '__main__':
+  options = parse_commandline()
+
+  files = get_yaml_files(options.sourcedir)
+  data = read_yaml_from_files(files)
+
+  # PreProcess is a custom resource that cannot be in the JSON
+  # It can be used for thing such as YAML anchors and references
+  data.pop('PreProcess', None)
+
+  write_json_to_file(data, options.outputfile)
+
+  if options.debug == True:
+    write_json_to_stdout(data)
