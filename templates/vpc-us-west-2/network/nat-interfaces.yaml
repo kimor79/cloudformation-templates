@@ -1,0 +1,128 @@
+# NAT Instances
+---
+
+Resources:
+
+##
+# Begin EIP {
+##
+
+  EIPNATAZA:
+    Type: AWS::EC2::EIP
+    DependsOn: VPC
+    Properties:
+      Domain: vpc
+
+  EIPNATAZB:
+    Type: AWS::EC2::EIP
+    DependsOn: VPC
+    Properties:
+      Domain: vpc
+
+  EIPNATAZC:
+    Type: AWS::EC2::EIP
+    DependsOn: VPC
+    Properties:
+      Domain: vpc
+
+##
+# End EIP }
+##
+
+##
+# Begin NAT Network Interfaces {
+##
+
+  ENINATAZA:
+    Type: AWS::EC2::NetworkInterface
+    Properties:
+      Description: NAT AZ A
+      GroupSet:
+        - Ref: SGAllowAllFromVPC
+        - Ref: SGAllowAllFromCorp
+      SourceDestCheck: false
+      SubnetId:
+        Ref: SubnetNATAZA
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - NAT-A (
+                - Ref: VPCName
+                - )
+
+  AssociateEIPENINATAZA:
+    Type: AWS::EC2::EIPAssociation
+    Properties:
+      AllocationId:
+        Fn::GetAtt:
+          - EIPNATAZA
+          - AllocationId
+      NetworkInterfaceId:
+        Ref: ENINATAZA
+
+  ENINATAZB:
+    Type: AWS::EC2::NetworkInterface
+    Properties:
+      Description: NAT AZ B
+      GroupSet:
+        - Ref: SGAllowAllFromVPC
+        - Ref: SGAllowAllFromCorp
+      SourceDestCheck: false
+      SubnetId:
+        Ref: SubnetNATAZB
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - NAT-B (
+                - Ref: VPCName
+                - )
+
+  AssociateEIPENINATAZB:
+    Type: AWS::EC2::EIPAssociation
+    Properties:
+      AllocationId:
+        Fn::GetAtt:
+          - EIPNATAZB
+          - AllocationId
+      NetworkInterfaceId:
+        Ref: ENINATAZB
+
+  ENINATAZC:
+    Type: AWS::EC2::NetworkInterface
+    Properties:
+      Description: NAT AZ C
+      GroupSet:
+        - Ref: SGAllowAllFromVPC
+        - Ref: SGAllowAllFromCorp
+      SourceDestCheck: false
+      SubnetId:
+        Ref: SubnetNATAZC
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - NAT-C (
+                - Ref: VPCName
+                - )
+
+  AssociateEIPENINATAZC:
+    Type: AWS::EC2::EIPAssociation
+    Properties:
+      AllocationId:
+        Fn::GetAtt:
+          - EIPNATAZC
+          - AllocationId
+      NetworkInterfaceId:
+        Ref: ENINATAZC
+
+##
+# End NAT Network Interfaces }
+##

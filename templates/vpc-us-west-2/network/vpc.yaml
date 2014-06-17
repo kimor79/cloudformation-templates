@@ -1,0 +1,167 @@
+# Setup the VPC and top-level requirements
+---
+
+Description: VPC us-west-2
+
+Parameters:
+  VPCName:
+    Default: VPC
+    Description: The name of this VPC
+    MinLength: 1
+    Type: String
+  VPCSupernetPrefix:
+    AllowedPattern: '[0-9]+\.[0-9]+'
+    ConstraintDescription: must only contain the first 2 octets
+    Description: First 2 octets of the VPC CIDR supernet
+    Default: 10.11
+    Type: String
+
+Resources:
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock:
+        Fn::Join:
+          - .
+          -
+            - Ref: VPCSupernetPrefix
+            - 0.0/16
+      Tags:
+        - Key: Name
+          Value:
+            Ref: VPCName
+
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value:
+            Ref: VPCName
+
+  AttachInternetGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId:
+        Ref: VPC
+      InternetGatewayId:
+        Ref: InternetGateway
+
+  RouteTableInternetGateway:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: VPC
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - Direct Internet (
+                - Ref: VPCName
+                - )
+
+  RouteInternetGateway:
+    Type: AWS::EC2::Route
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId:
+        Ref: InternetGateway
+      RouteTableId:
+        Ref: RouteTableInternetGateway
+
+##
+# Begin NAT Route Table AZ A {
+##
+
+  RouteTableNATAZA:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: VPC
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - NAT AZ A (
+                - Ref: VPCName
+                - )
+
+  RouteNATAZA:
+    Type: AWS::EC2::Route
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      NetworkInterfaceId:
+        Ref: ENINATAZA
+      RouteTableId:
+        Ref: RouteTableNATAZA
+
+##
+# End NAT Route Table AZ A }
+##
+
+##
+# Begin NAT Route Table AZ B {
+##
+
+  RouteTableNATAZB:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: VPC
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - NAT AZ B (
+                - Ref: VPCName
+                - )
+
+  RouteNATAZB:
+    Type: AWS::EC2::Route
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      NetworkInterfaceId:
+        Ref: ENINATAZB
+      RouteTableId:
+        Ref: RouteTableNATAZB
+
+##
+# End NAT Route Table AZ B }
+
+##
+# Begin NAT Route Table AZ C {
+##
+
+  RouteTableNATAZC:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: VPC
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - NAT AZ C (
+                - Ref: VPCName
+                - )
+
+  RouteNATAZC:
+    Type: AWS::EC2::Route
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      NetworkInterfaceId:
+        Ref: ENINATAZC
+      RouteTableId:
+        Ref: RouteTableNATAZC
+
+##
+# End NAT Route Table AZ C }
+##
