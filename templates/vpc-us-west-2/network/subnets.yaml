@@ -259,7 +259,7 @@ Resources:
       VpcId:
         Ref: VPC
 
-  AssociateSubnetPrivateELBAZARouteTableInternetGateway:
+  AssociateSubnetPrivateELBAZARouteTableNATAZA:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       RouteTableId:
@@ -297,7 +297,7 @@ Resources:
       VpcId:
         Ref: VPC
 
-  AssociateSubnetPrivateELBAZBRouteTableInternetGateway:
+  AssociateSubnetPrivateELBAZBRouteTableNATAZB:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       RouteTableId:
@@ -335,7 +335,7 @@ Resources:
       VpcId:
         Ref: VPC
 
-  AssociateSubnetPrivateELBAZCRouteTableInternetGateway:
+  AssociateSubnetPrivateELBAZCRouteTableNATAZC:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       RouteTableId:
@@ -373,7 +373,7 @@ Resources:
       VpcId:
         Ref: VPC
 
-  AssociateSubnetPrivateInfraAZARouteTableInternetGateway:
+  AssociateSubnetPrivateInfraAZARouteTableNATAZA:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       RouteTableId:
@@ -411,7 +411,7 @@ Resources:
       VpcId:
         Ref: VPC
 
-  AssociateSubnetPrivateInfraAZBRouteTableInternetGateway:
+  AssociateSubnetPrivateInfraAZBRouteTableNATAZB:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       RouteTableId:
@@ -449,7 +449,7 @@ Resources:
       VpcId:
         Ref: VPC
 
-  AssociateSubnetPrivateInfraAZCRouteTableInternetGateway:
+  AssociateSubnetPrivateInfraAZCRouteTableNATAZC:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       RouteTableId:
@@ -487,7 +487,7 @@ Resources:
       VpcId:
         Ref: VPC
 
-  AssociateSubnetPrivateDevAZARouteTableInternetGateway:
+  AssociateSubnetPrivateDevAZARouteTableNATAZA:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       RouteTableId:
@@ -525,7 +525,7 @@ Resources:
       VpcId:
         Ref: VPC
 
-  AssociateSubnetPrivateDevAZBRouteTableInternetGateway:
+  AssociateSubnetPrivateDevAZBRouteTableNATAZB:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       RouteTableId:
@@ -563,7 +563,7 @@ Resources:
       VpcId:
         Ref: VPC
 
-  AssociateSubnetPrivateDevAZCRouteTableInternetGateway:
+  AssociateSubnetPrivateDevAZCRouteTableNATAZC:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       RouteTableId:
