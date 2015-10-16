@@ -25,7 +25,7 @@ Resources:
             Fn::Join:
               - ""
               -
-                - NAT/Proxies/Tunnels/etc (
+                - NAT/Proxies/Tunnels/etc AZ A (
                 - Ref: VPCName
                 - )
       VpcId:
@@ -63,7 +63,7 @@ Resources:
             Fn::Join:
               - ""
               -
-                - NAT/Proxies/Tunnels/etc (
+                - NAT/Proxies/Tunnels/etc AZ B (
                 - Ref: VPCName
                 - )
       VpcId:
@@ -101,7 +101,7 @@ Resources:
             Fn::Join:
               - ""
               -
-                - NAT/Proxies/Tunnels/etc (
+                - NAT/Proxies/Tunnels/etc AZ C (
                 - Ref: VPCName
                 - )
       VpcId:
@@ -139,7 +139,7 @@ Resources:
             Fn::Join:
               - ""
               -
-                - Public ELBs (
+                - Public ELBs AZ A (
                 - Ref: VPCName
                 - )
       VpcId:
@@ -177,7 +177,7 @@ Resources:
             Fn::Join:
               - ""
               -
-                - Public ELBs (
+                - Public ELBs AZ B (
                 - Ref: VPCName
                 - )
       VpcId:
@@ -215,7 +215,7 @@ Resources:
             Fn::Join:
               - ""
               -
-                - Public ELBs (
+                - Public ELBs AZ C (
                 - Ref: VPCName
                 - )
       VpcId:
@@ -253,7 +253,7 @@ Resources:
             Fn::Join:
               - ""
               -
-                - Private ELBs (
+                - Private ELBs AZ A (
                 - Ref: VPCName
                 - )
       VpcId:
@@ -291,7 +291,7 @@ Resources:
             Fn::Join:
               - ""
               -
-                - Private ELBs (
+                - Private ELBs AZ B (
                 - Ref: VPCName
                 - )
       VpcId:
@@ -329,7 +329,7 @@ Resources:
             Fn::Join:
               - ""
               -
-                - Private ELBs (
+                - Private ELBs AZ C (
                 - Ref: VPCName
                 - )
       VpcId:
@@ -367,7 +367,7 @@ Resources:
             Fn::Join:
               - ""
               -
-                - Infrastructure (
+                - Infrastructure AZ A (
                 - Ref: VPCName
                 - )
       VpcId:
@@ -405,7 +405,7 @@ Resources:
             Fn::Join:
               - ""
               -
-                - Infrastructure (
+                - Infrastructure AZ B (
                 - Ref: VPCName
                 - )
       VpcId:
@@ -443,7 +443,7 @@ Resources:
             Fn::Join:
               - ""
               -
-                - Infrastructure (
+                - Infrastructure AZ C (
                 - Ref: VPCName
                 - )
       VpcId:
@@ -481,7 +481,7 @@ Resources:
             Fn::Join:
               - ""
               -
-                - Dev (
+                - Dev AZ A (
                 - Ref: VPCName
                 - )
       VpcId:
@@ -519,7 +519,7 @@ Resources:
             Fn::Join:
               - ""
               -
-                - Dev (
+                - Dev AZ B (
                 - Ref: VPCName
                 - )
       VpcId:
@@ -557,7 +557,7 @@ Resources:
             Fn::Join:
               - ""
               -
-                - Dev (
+                - Dev AZ C (
                 - Ref: VPCName
                 - )
       VpcId:
