@@ -1,0 +1,136 @@
+# NAT Instances
+---
+
+Resources:
+
+##
+# Begin NAT AZ A {
+##
+
+  EIPNATAZA:
+    Type: AWS::EC2::EIP
+    DependsOn: VPC
+    Properties:
+      Domain: vpc
+
+  ENINATAZA:
+    Type: AWS::EC2::NetworkInterface
+    Properties:
+      Description: NAT AZ A
+      GroupSet:
+        - Ref: SGAllowAllFromVPC
+        - Ref: SGAllowAllFromCorp
+      SourceDestCheck: false
+      SubnetId:
+        Ref: SubnetPublicAZA
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - NAT-A (
+                - Ref: VPCName
+                - )
+
+  AssociateEIPENINATAZA:
+    Type: AWS::EC2::EIPAssociation
+    Properties:
+      AllocationId:
+        Fn::GetAtt:
+          - EIPNATAZA
+          - AllocationId
+      NetworkInterfaceId:
+        Ref: ENINATAZA
+
+##
+# End NAT AZ A }
+##
+
+##
+# Begin NAT AZ B {
+##
+
+  EIPNATAZB:
+    Type: AWS::EC2::EIP
+    DependsOn: VPC
+    Properties:
+      Domain: vpc
+
+  ENINATAZB:
+    Type: AWS::EC2::NetworkInterface
+    Properties:
+      Description: NAT AZ B
+      GroupSet:
+        - Ref: SGAllowAllFromVPC
+        - Ref: SGAllowAllFromCorp
+      SourceDestCheck: false
+      SubnetId:
+        Ref: SubnetPublicAZB
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - NAT-B (
+                - Ref: VPCName
+                - )
+
+  AssociateEIPENINATAZB:
+    Type: AWS::EC2::EIPAssociation
+    Properties:
+      AllocationId:
+        Fn::GetAtt:
+          - EIPNATAZB
+          - AllocationId
+      NetworkInterfaceId:
+        Ref: ENINATAZB
+
+##
+# End NAT AZ B }
+##
+
+##
+# Begin NAT AZ C {
+##
+
+  EIPNATAZC:
+    Type: AWS::EC2::EIP
+    DependsOn: VPC
+    Properties:
+      Domain: vpc
+
+  ENINATAZC:
+    Type: AWS::EC2::NetworkInterface
+    Properties:
+      Description: NAT AZ C
+      GroupSet:
+        - Ref: SGAllowAllFromVPC
+        - Ref: SGAllowAllFromCorp
+      SourceDestCheck: false
+      SubnetId:
+        Ref: SubnetPublicAZC
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - NAT-C (
+                - Ref: VPCName
+                - )
+
+  AssociateEIPENINATAZC:
+    Type: AWS::EC2::EIPAssociation
+    Properties:
+      AllocationId:
+        Fn::GetAtt:
+          - EIPNATAZC
+          - AllocationId
+      NetworkInterfaceId:
+        Ref: ENINATAZC
+
+##
+# End NAT AZ C }
+##

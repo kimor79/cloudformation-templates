@@ -1,0 +1,251 @@
+# Subnet declarations
+#
+# Please keep in CIDR order
+#
+# x.x.0.0/18 - AZ A
+#   x.x.0.0/20 - Private subnet
+#   x.x.16.0/21 - Public subnet
+#   x.x.24.0/21 - Spare
+#   x.x.32.0/19 - Spare
+# x.x.64.0/18 - AZ B
+#   x.x.64.0/20 - Private subnet
+#   x.x.80.0/21 - Public subnet
+#   x.x.88.0/21 - Spare
+#   x.x.96.0/19 - Spare
+# x.x.128.0/18 - AZ C
+#   x.x.128.0/20 - Private subnet
+#   x.x.144.0/21 - Public subnet
+#   x.x.152.0/21 - Spare
+#   x.x.160.0/19 - Spare
+# x.x.192.0/18 - Spare
+---
+
+Resources:
+
+##
+# Begin Subnet Private AZ A {
+##
+
+  SubnetPrivateAZA:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: us-west-2a
+      CidrBlock:
+        Fn::Join:
+          - .
+          -
+            - Ref: VPCSupernetPrefix
+            - 0.0/20
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - Private AZ A, uses NAT (
+                - Ref: VPCName
+                - )
+      VpcId:
+        Ref: VPC
+
+  AssociateSubnetPrivateAZARouteTableNATAZA:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: RouteTableNATAZA
+      SubnetId:
+        Ref: SubnetPrivateAZA
+
+##
+# End Subnet Private AZ A }
+##
+
+##
+# Begin Subnet Public AZ A {
+##
+
+  SubnetPublicAZA:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: us-west-2a
+      CidrBlock:
+        Fn::Join:
+          - .
+          -
+            - Ref: VPCSupernetPrefix
+            - 16.0/21
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - Public AZ A, requires EIP (
+                - Ref: VPCName
+                - )
+      VpcId:
+        Ref: VPC
+
+  AssociateSubnetPublicAZARouteTableInternetGateway:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: RouteTableInternetGateway
+      SubnetId:
+        Ref: SubnetPublicAZA
+
+##
+# End Subnet Public AZ A }
+##
+
+##
+# Begin Subnet Private AZ B {
+##
+
+  SubnetPrivateAZB:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: us-west-2b
+      CidrBlock:
+        Fn::Join:
+          - .
+          -
+            - Ref: VPCSupernetPrefix
+            - 64.0/20
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - Private AZ B, uses NAT (
+                - Ref: VPCName
+                - )
+      VpcId:
+        Ref: VPC
+
+  AssociateSubnetPrivateAZBRouteTableNATAZB:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: RouteTableNATAZB
+      SubnetId:
+        Ref: SubnetPrivateAZB
+
+##
+# End Subnet Private AZ B }
+##
+
+##
+# Begin Subnet Public AZ B {
+##
+
+  SubnetPublicAZB:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: us-west-2b
+      CidrBlock:
+        Fn::Join:
+          - .
+          -
+            - Ref: VPCSupernetPrefix
+            - 80.0/21
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - Public AZ B, requires EIP (
+                - Ref: VPCName
+                - )
+      VpcId:
+        Ref: VPC
+
+  AssociateSubnetPublicAZBRouteTableInternetGateway:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: RouteTableInternetGateway
+      SubnetId:
+        Ref: SubnetPublicAZB
+
+##
+# End Subnet Public AZ B }
+##
+
+##
+# Begin Subnet Private AZ C {
+##
+
+  SubnetPrivateAZC:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: us-west-2c
+      CidrBlock:
+        Fn::Join:
+          - .
+          -
+            - Ref: VPCSupernetPrefix
+            - 128.0/20
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - Private AZ C, uses NAT (
+                - Ref: VPCName
+                - )
+      VpcId:
+        Ref: VPC
+
+  AssociateSubnetPrivateAZCRouteTableNATAZC:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: RouteTableNATAZC
+      SubnetId:
+        Ref: SubnetPrivateAZC
+
+##
+# End Subnet Private AZ C }
+##
+
+##
+# Begin Subnet Public AZ C {
+##
+
+  SubnetPublicAZC:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: us-west-2c
+      CidrBlock:
+        Fn::Join:
+          - .
+          -
+            - Ref: VPCSupernetPrefix
+            - 144.0/21
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - Public AZ C, requires EIP (
+                - Ref: VPCName
+                - )
+      VpcId:
+        Ref: VPC
+
+  AssociateSubnetPublicAZCRouteTableInternetGateway:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: RouteTableInternetGateway
+      SubnetId:
+        Ref: SubnetPublicAZC
+
+##
+# End Subnet Public AZ C }
+##

@@ -1,0 +1,103 @@
+# Security Groups
+---
+
+Resources:
+
+##
+# Begin Intra-VPC Access Security Group Rules {
+##
+
+  SGAllowAllFromVPC:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow all from within the VPC
+      VpcId:
+        Ref: VPC
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - Within VPC (
+                - Ref: VPCName
+                - )
+
+  SGAllowAllFromVPCIngressAllow:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      FromPort: -1 
+      GroupId:
+        Ref: SGAllowAllFromVPC
+      IpProtocol: -1
+      SourceSecurityGroupId:
+        Ref: SGAllowAllFromVPC
+      ToPort: -1
+
+##
+# End Intra-VPC Access Security Group Rules }
+##
+
+##
+# Begin Corp Access Security Group Rules {
+##
+
+  SGAllowAllFromCorp:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow all from Corp
+      VpcId:
+        Ref: VPC
+      SecurityGroupIngress:
+        - CidrIp:
+            Ref: CorpSubnet1
+          FromPort: -1 
+          IpProtocol: -1
+          ToPort: -1
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - Corp (
+                - Ref: VPCName
+                - )
+
+##
+# End Corp Security Group Rules }
+##
+
+##
+# Begin HTTP Access Security Group Rules {
+##
+
+  SGAllowHTTPFromEverywhere:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow HTTP from everywhere
+      VpcId:
+        Ref: VPC
+      SecurityGroupIngress:
+        - CidrIp: 0.0.0.0/0
+          FromPort: 80
+          IpProtocol: tcp
+          ToPort: 80
+
+        - CidrIp: 0.0.0.0/0
+          FromPort: 443
+          IpProtocol: tcp
+          ToPort: 443
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - HTTP (
+                - Ref: VPCName
+                - )
+
+##
+# End HTTP Access Security Group Rules }
+##
