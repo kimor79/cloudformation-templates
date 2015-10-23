@@ -14,9 +14,9 @@ Resources:
             - Ref: VPCName
             - )
       SubnetIds:
-        - Ref: SubnetPrivateAZA
-        - Ref: SubnetPrivateAZB
-        - Ref: SubnetPrivateAZC
+        - Ref: SubnetPrivateAZ1
+        - Ref: SubnetPrivateAZ2
+        - Ref: SubnetPrivateAZ3
 
   DBSubnetPublic:
     Type: AWS::RDS::DBSubnetGroup
@@ -29,6 +29,6 @@ Resources:
             - Ref: VPCName
             - )
       SubnetIds:
-        - Ref: SubnetPublicAZA
-        - Ref: SubnetPublicAZB
-        - Ref: SubnetPublicAZC
+        - Ref: SubnetPublicAZ1
+        - Ref: SubnetPublicAZ2
+        - Ref: SubnetPublicAZ3

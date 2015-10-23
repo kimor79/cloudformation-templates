@@ -4,10 +4,10 @@
 Resources:
 
 ##
-# Begin NAT Route Table AZ A {
+# Begin NAT Route Table AZ 1 {
 ##
 
-  RouteTableNATAZA:
+  RouteTableNATAZ1:
     Type: AWS::EC2::RouteTable
     Properties:
       VpcId:
@@ -18,28 +18,32 @@ Resources:
             Fn::Join:
               - ""
               -
-                - NAT AZ A (
+                - 'NAT AZ '
+                - Fn::Select:
+                    - 0
+                    - Ref: AvailabilityZones
+                - ' ('
                 - Ref: VPCName
                 - )
 
-  RouteNATAZA:
+  RouteNATAZ1:
     Type: AWS::EC2::Route
     Properties:
       DestinationCidrBlock: 0.0.0.0/0
       NetworkInterfaceId:
-        Ref: ENINATAZA
+        Ref: ENINATAZ1
       RouteTableId:
-        Ref: RouteTableNATAZA
+        Ref: RouteTableNATAZ1
 
 ##
-# End NAT Route Table AZ A }
+# End NAT Route Table AZ 1 }
 ##
 
 ##
-# Begin NAT Route Table AZ B {
+# Begin NAT Route Table AZ 2 {
 ##
 
-  RouteTableNATAZB:
+  RouteTableNATAZ2:
     Type: AWS::EC2::RouteTable
     Properties:
       VpcId:
@@ -50,27 +54,32 @@ Resources:
             Fn::Join:
               - ""
               -
-                - NAT AZ B (
+                - 'NAT AZ '
+                - Fn::Select:
+                    - 1
+                    - Ref: AvailabilityZones
+                - ' ('
                 - Ref: VPCName
                 - )
 
-  RouteNATAZB:
+  RouteNATAZ2:
     Type: AWS::EC2::Route
     Properties:
       DestinationCidrBlock: 0.0.0.0/0
       NetworkInterfaceId:
-        Ref: ENINATAZB
+        Ref: ENINATAZ2
       RouteTableId:
-        Ref: RouteTableNATAZB
+        Ref: RouteTableNATAZ2
 
 ##
-# End NAT Route Table AZ B }
-
-##
-# Begin NAT Route Table AZ C {
+# End NAT Route Table AZ 2 }
 ##
 
-  RouteTableNATAZC:
+##
+# Begin NAT Route Table AZ 3 {
+##
+
+  RouteTableNATAZ3:
     Type: AWS::EC2::RouteTable
     Properties:
       VpcId:
@@ -81,19 +90,23 @@ Resources:
             Fn::Join:
               - ""
               -
-                - NAT AZ C (
+                - 'NAT AZ '
+                - Fn::Select:
+                    - 2
+                    - Ref: AvailabilityZones
+                - ' ('
                 - Ref: VPCName
                 - )
 
-  RouteNATAZC:
+  RouteNATAZ3:
     Type: AWS::EC2::Route
     Properties:
       DestinationCidrBlock: 0.0.0.0/0
       NetworkInterfaceId:
-        Ref: ENINATAZC
+        Ref: ENINATAZ3
       RouteTableId:
-        Ref: RouteTableNATAZC
+        Ref: RouteTableNATAZ3
 
 ##
-# End NAT Route Table AZ C }
+# End NAT Route Table AZ 3 }
 ##

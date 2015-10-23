@@ -4,133 +4,166 @@
 Resources:
 
 ##
-# Begin NAT AZ A {
+# Begin NAT AZ 1 {
 ##
 
-  EIPNATAZA:
+  EIPNATAZ1:
     Type: AWS::EC2::EIP
     DependsOn: VPC
     Properties:
       Domain: vpc
 
-  ENINATAZA:
+  ENINATAZ1:
     Type: AWS::EC2::NetworkInterface
     Properties:
-      Description: NAT AZ A
+      Description:
+        Fn::Join:
+          - " "
+          -
+            - NAT AZ
+            - Fn::Select:
+                - 0
+                - Ref: AvailabilityZones
       GroupSet:
         - Ref: SGAllowAllFromVPC
         - Ref: SGAllowAllFromCorp
       SourceDestCheck: false
       SubnetId:
-        Ref: SubnetPublicAZA
+        Ref: SubnetPublicAZ1
       Tags:
         - Key: Name
           Value:
             Fn::Join:
               - ""
               -
-                - NAT-A (
+                - 'NAT-'
+                - Fn::Select:
+                    - 0
+                    - Ref: AvailabilityZones
+                - ' ('
                 - Ref: VPCName
                 - )
 
-  AssociateEIPENINATAZA:
+  AssociateEIPENINATAZ1:
     Type: AWS::EC2::EIPAssociation
     Properties:
       AllocationId:
         Fn::GetAtt:
-          - EIPNATAZA
+          - EIPNATAZ1
           - AllocationId
       NetworkInterfaceId:
-        Ref: ENINATAZA
+        Ref: ENINATAZ1
 
 ##
-# End NAT AZ A }
+# End NAT AZ 1 }
 ##
 
 ##
-# Begin NAT AZ B {
+# Begin NAT AZ 2 {
 ##
 
-  EIPNATAZB:
+  EIPNATAZ2:
     Type: AWS::EC2::EIP
     DependsOn: VPC
     Properties:
       Domain: vpc
 
-  ENINATAZB:
+  ENINATAZ2:
     Type: AWS::EC2::NetworkInterface
     Properties:
-      Description: NAT AZ B
+      Description:
+        Fn::Join:
+          - " "
+          -
+            - NAT AZ
+            - Fn::Select:
+                - 1
+                - Ref: AvailabilityZones
       GroupSet:
         - Ref: SGAllowAllFromVPC
         - Ref: SGAllowAllFromCorp
       SourceDestCheck: false
       SubnetId:
-        Ref: SubnetPublicAZB
+        Ref: SubnetPublicAZ2
       Tags:
         - Key: Name
           Value:
             Fn::Join:
               - ""
               -
-                - NAT-B (
+                - 'NAT-'
+                - Fn::Select:
+                    - 1
+                    - Ref: AvailabilityZones
+                - ' ('
                 - Ref: VPCName
                 - )
 
-  AssociateEIPENINATAZB:
+  AssociateEIPENINATAZ2:
     Type: AWS::EC2::EIPAssociation
     Properties:
       AllocationId:
         Fn::GetAtt:
-          - EIPNATAZB
+          - EIPNATAZ2
           - AllocationId
       NetworkInterfaceId:
-        Ref: ENINATAZB
+        Ref: ENINATAZ2
 
 ##
-# End NAT AZ B }
+# End NAT AZ 2 }
 ##
 
 ##
-# Begin NAT AZ C {
+# Begin NAT AZ 3 {
 ##
 
-  EIPNATAZC:
+  EIPNATAZ3:
     Type: AWS::EC2::EIP
     DependsOn: VPC
     Properties:
       Domain: vpc
 
-  ENINATAZC:
+  ENINATAZ3:
     Type: AWS::EC2::NetworkInterface
     Properties:
-      Description: NAT AZ C
+      Description:
+        Fn::Join:
+          - " "
+          -
+            - NAT AZ
+            - Fn::Select:
+                - 2
+                - Ref: AvailabilityZones
       GroupSet:
         - Ref: SGAllowAllFromVPC
         - Ref: SGAllowAllFromCorp
       SourceDestCheck: false
       SubnetId:
-        Ref: SubnetPublicAZC
+        Ref: SubnetPublicAZ3
       Tags:
         - Key: Name
           Value:
             Fn::Join:
               - ""
               -
-                - NAT-C (
+                - 'NAT-'
+                - Fn::Select:
+                    - 2
+                    - Ref: AvailabilityZones
+                - ' ('
                 - Ref: VPCName
                 - )
 
-  AssociateEIPENINATAZC:
+  AssociateEIPENINATAZ3:
     Type: AWS::EC2::EIPAssociation
     Properties:
       AllocationId:
         Fn::GetAtt:
-          - EIPNATAZC
+          - EIPNATAZ3
           - AllocationId
       NetworkInterfaceId:
-        Ref: ENINATAZC
+        Ref: ENINATAZ3
 
 ##
-# End NAT AZ C }
+# End NAT AZ 3 }
 ##
