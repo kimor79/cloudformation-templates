@@ -1,0 +1,34 @@
+# RDS DB Subnet groups
+---
+
+Resources:
+
+  DBSubnetPrivate:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription:
+        Fn::Join:
+          - ""
+          -
+            - Private (
+            - Ref: VPCName
+            - )
+      SubnetIds:
+        - Ref: SubnetPrivateRDSAZ1
+        - Ref: SubnetPrivateRDSAZ2
+        - Ref: SubnetPrivateRDSAZ3
+
+  DBSubnetPublic:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription:
+        Fn::Join:
+          - ""
+          -
+            - Public (
+            - Ref: VPCName
+            - )
+      SubnetIds:
+        - Ref: SubnetPublicRDSAZ1
+        - Ref: SubnetPublicRDSAZ2
+        - Ref: SubnetPublicRDSAZ3

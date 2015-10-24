@@ -1,0 +1,112 @@
+# Internet-bound traffic from private subnets is routed through the NAT EIPs
+---
+
+Resources:
+
+##
+# Begin NAT Route Table AZ 1 {
+##
+
+  RouteTableNATAZ1:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: VPC
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - 'NAT AZ '
+                - Fn::Select:
+                    - 0
+                    - Ref: AvailabilityZones
+                - ' ('
+                - Ref: VPCName
+                - )
+
+  RouteNATAZ1:
+    Type: AWS::EC2::Route
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      NetworkInterfaceId:
+        Ref: ENINATAZ1
+      RouteTableId:
+        Ref: RouteTableNATAZ1
+
+##
+# End NAT Route Table AZ 1 }
+##
+
+##
+# Begin NAT Route Table AZ 2 {
+##
+
+  RouteTableNATAZ2:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: VPC
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - 'NAT AZ '
+                - Fn::Select:
+                    - 1
+                    - Ref: AvailabilityZones
+                - ' ('
+                - Ref: VPCName
+                - )
+
+  RouteNATAZ2:
+    Type: AWS::EC2::Route
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      NetworkInterfaceId:
+        Ref: ENINATAZ2
+      RouteTableId:
+        Ref: RouteTableNATAZ2
+
+##
+# End NAT Route Table AZ 2 }
+##
+
+##
+# Begin NAT Route Table AZ 3 {
+##
+
+  RouteTableNATAZ3:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: VPC
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - 'NAT AZ '
+                - Fn::Select:
+                    - 2
+                    - Ref: AvailabilityZones
+                - ' ('
+                - Ref: VPCName
+                - )
+
+  RouteNATAZ3:
+    Type: AWS::EC2::Route
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      NetworkInterfaceId:
+        Ref: ENINATAZ3
+      RouteTableId:
+        Ref: RouteTableNATAZ3
+
+##
+# End NAT Route Table AZ 3 }
+##

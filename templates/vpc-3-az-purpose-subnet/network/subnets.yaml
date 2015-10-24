@@ -1,0 +1,888 @@
+# Subnet declarations
+#
+# Please keep in CIDR order
+---
+
+Resources:
+
+##
+# Begin Subnet NAT AZ 1 {
+##
+
+  SubnetNATAZ1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+        Fn::Join:
+          - ""
+          -
+            - Ref: AWS::Region
+            - Fn::Select:
+                - 0
+                - Ref: AvailabilityZones
+      CidrBlock:
+        Fn::Join:
+          - .
+          -
+            - Ref: VPCSupernetPrefix
+            - 0.0/24
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - 'NAT/Proxies/Tunnels/etc AZ '
+                - Fn::Select:
+                    - 0
+                    - Ref: AvailabilityZones
+                - ', requires EIP/Public IP ('
+                - Ref: VPCName
+                - )
+      VpcId:
+        Ref: VPC
+
+  AssociateSubnetNATAZ1RouteTableInternetGateway:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: RouteTableInternetGateway
+      SubnetId:
+        Ref: SubnetNATAZ1
+
+##
+# End Subnet NAT AZ 1 }
+##
+
+##
+# Begin Subnet NAT AZ 2 {
+##
+
+  SubnetNATAZ2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+        Fn::Join:
+          - ""
+          -
+            - Ref: AWS::Region
+            - Fn::Select:
+                - 1
+                - Ref: AvailabilityZones
+      CidrBlock:
+        Fn::Join:
+          - .
+          -
+            - Ref: VPCSupernetPrefix
+            - 1.0/24
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - 'NAT/Proxies/Tunnels/etc AZ '
+                - Fn::Select:
+                    - 1
+                    - Ref: AvailabilityZones
+                - ', requires EIP/Public IP ('
+                - Ref: VPCName
+                - )
+      VpcId:
+        Ref: VPC
+
+  AssociateSubnetNATAZ2RouteTableInternetGateway:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: RouteTableInternetGateway
+      SubnetId:
+        Ref: SubnetNATAZ2
+
+##
+# End Subnet NAT AZ 2 }
+##
+
+##
+# Begin Subnet NAT AZ 3 {
+##
+
+  SubnetNATAZ3:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+        Fn::Join:
+          - ""
+          -
+            - Ref: AWS::Region
+            - Fn::Select:
+                - 2
+                - Ref: AvailabilityZones
+      CidrBlock:
+        Fn::Join:
+          - .
+          -
+            - Ref: VPCSupernetPrefix
+            - 2.0/24
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - 'NAT/Proxies/Tunnels/etc AZ '
+                - Fn::Select:
+                    - 2
+                    - Ref: AvailabilityZones
+                - ', requires EIP/Public IP ('
+                - Ref: VPCName
+                - )
+      VpcId:
+        Ref: VPC
+
+  AssociateSubnetNATAZ3RouteTableInternetGateway:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: RouteTableInternetGateway
+      SubnetId:
+        Ref: SubnetNATAZ3
+
+##
+# End Subnet NAT AZ 3 }
+##
+
+##
+# Begin Subnet Public ELB AZ 1 {
+##
+
+  SubnetPublicELBAZ1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+        Fn::Join:
+          - ""
+          -
+            - Ref: AWS::Region
+            - Fn::Select:
+                - 0
+                - Ref: AvailabilityZones
+      CidrBlock:
+        Fn::Join:
+          - .
+          -
+            - Ref: VPCSupernetPrefix
+            - 10.0/24
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - 'Public/Internet facing ELBs AZ '
+                - Fn::Select:
+                    - 0
+                    - Ref: AvailabilityZones
+                - ' ('
+                - Ref: VPCName
+                - )
+      VpcId:
+        Ref: VPC
+
+  AssociateSubnetPublicELBAZ1RouteTableInternetGateway:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: RouteTableInternetGateway
+      SubnetId:
+        Ref: SubnetPublicELBAZ1
+
+##
+# End Subnet Public ELB AZ 1 }
+##
+
+##
+# Begin Subnet Public ELB AZ 2 {
+##
+
+  SubnetPublicELBAZ2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+        Fn::Join:
+          - ""
+          -
+            - Ref: AWS::Region
+            - Fn::Select:
+                - 1
+                - Ref: AvailabilityZones
+      CidrBlock:
+        Fn::Join:
+          - .
+          -
+            - Ref: VPCSupernetPrefix
+            - 11.0/24
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - 'Public/Internet facing ELBs AZ '
+                - Fn::Select:
+                    - 1
+                    - Ref: AvailabilityZones
+                - ' ('
+                - Ref: VPCName
+                - )
+      VpcId:
+        Ref: VPC
+
+  AssociateSubnetPublicELBAZ2RouteTableInternetGateway:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: RouteTableInternetGateway
+      SubnetId:
+        Ref: SubnetPublicELBAZ2
+
+##
+# End Subnet Public ELB AZ 2 }
+##
+
+##
+# Begin Subnet Public ELB AZ 3 {
+##
+
+  SubnetPublicELBAZ3:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+        Fn::Join:
+          - ""
+          -
+            - Ref: AWS::Region
+            - Fn::Select:
+                - 2
+                - Ref: AvailabilityZones
+      CidrBlock:
+        Fn::Join:
+          - .
+          -
+            - Ref: VPCSupernetPrefix
+            - 12.0/24
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - 'Public/Internet facing ELBs AZ '
+                - Fn::Select:
+                    - 2
+                    - Ref: AvailabilityZones
+                - ' ('
+                - Ref: VPCName
+                - )
+      VpcId:
+        Ref: VPC
+
+  AssociateSubnetPublicELBAZ3RouteTableInternetGateway:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: RouteTableInternetGateway
+      SubnetId:
+        Ref: SubnetPublicELBAZ3
+
+##
+# End Subnet Public ELB AZ 3 }
+##
+
+##
+# Begin Subnet Private ELB AZ 1 {
+##
+
+  SubnetPrivateELBAZ1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+        Fn::Join:
+          - ""
+          -
+            - Ref: AWS::Region
+            - Fn::Select:
+                - 0
+                - Ref: AvailabilityZones
+      CidrBlock:
+        Fn::Join:
+          - .
+          -
+            - Ref: VPCSupernetPrefix
+            - 15.0/24
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - 'Private/internal ELBs AZ '
+                - Fn::Select:
+                    - 0
+                    - Ref: AvailabilityZones
+                - ' ('
+                - Ref: VPCName
+                - )
+      VpcId:
+        Ref: VPC
+
+  AssociateSubnetPrivateELBAZ1RouteTableNATAZ1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: RouteTableNATAZ1
+      SubnetId:
+        Ref: SubnetPrivateELBAZ1
+
+##
+# End Subnet Private ELB AZ 1 }
+##
+
+##
+# Begin Subnet Private ELB AZ 2 {
+##
+
+  SubnetPrivateELBAZ2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+        Fn::Join:
+          - ""
+          -
+            - Ref: AWS::Region
+            - Fn::Select:
+                - 1
+                - Ref: AvailabilityZones
+      CidrBlock:
+        Fn::Join:
+          - .
+          -
+            - Ref: VPCSupernetPrefix
+            - 16.0/24
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - 'Private/internal ELBs AZ '
+                - Fn::Select:
+                    - 1
+                    - Ref: AvailabilityZones
+                - ' ('
+                - Ref: VPCName
+                - )
+      VpcId:
+        Ref: VPC
+
+  AssociateSubnetPrivateELBAZ2RouteTableNATAZ2:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: RouteTableNATAZ2
+      SubnetId:
+        Ref: SubnetPrivateELBAZ2
+
+##
+# End Subnet Private ELB AZ 2 }
+##
+
+##
+# Begin Subnet Private ELB AZ 3 {
+##
+
+  SubnetPrivateELBAZ3:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+        Fn::Join:
+          - ""
+          -
+            - Ref: AWS::Region
+            - Fn::Select:
+                - 2
+                - Ref: AvailabilityZones
+      CidrBlock:
+        Fn::Join:
+          - .
+          -
+            - Ref: VPCSupernetPrefix
+            - 17.0/24
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - 'Private/internal ELBs AZ '
+                - Fn::Select:
+                    - 2
+                    - Ref: AvailabilityZones
+                - ' ('
+                - Ref: VPCName
+                - )
+      VpcId:
+        Ref: VPC
+
+  AssociateSubnetPrivateELBAZ3RouteTableNATAZ1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: RouteTableNATAZ1
+      SubnetId:
+        Ref: SubnetPrivateELBAZ3
+
+##
+# End Subnet Private ELB AZ 3 }
+##
+
+##
+# Begin Subnet Public RDS AZ 1 {
+##
+
+  SubnetPublicRDSAZ1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+        Fn::Join:
+          - ""
+          -
+            - Ref: AWS::Region
+            - Fn::Select:
+                - 0
+                - Ref: AvailabilityZones
+      CidrBlock:
+        Fn::Join:
+          - .
+          -
+            - Ref: VPCSupernetPrefix
+            - 20.0/24
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - 'Public/Internet facing RDSs AZ '
+                - Fn::Select:
+                    - 0
+                    - Ref: AvailabilityZones
+                - ' ('
+                - Ref: VPCName
+                - )
+      VpcId:
+        Ref: VPC
+
+  AssociateSubnetPublicRDSAZ1RouteTableInternetGateway:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: RouteTableInternetGateway
+      SubnetId:
+        Ref: SubnetPublicRDSAZ1
+
+##
+# End Subnet Public RDS AZ 1 }
+##
+
+##
+# Begin Subnet Public RDS AZ 2 {
+##
+
+  SubnetPublicRDSAZ2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+        Fn::Join:
+          - ""
+          -
+            - Ref: AWS::Region
+            - Fn::Select:
+                - 1
+                - Ref: AvailabilityZones
+      CidrBlock:
+        Fn::Join:
+          - .
+          -
+            - Ref: VPCSupernetPrefix
+            - 21.0/24
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - 'Public/Internet facing RDSs AZ '
+                - Fn::Select:
+                    - 1
+                    - Ref: AvailabilityZones
+                - ' ('
+                - Ref: VPCName
+                - )
+      VpcId:
+        Ref: VPC
+
+  AssociateSubnetPublicRDSAZ2RouteTableInternetGateway:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: RouteTableInternetGateway
+      SubnetId:
+        Ref: SubnetPublicRDSAZ2
+
+##
+# End Subnet Public RDS AZ 2 }
+##
+
+##
+# Begin Subnet Public RDS AZ 3 {
+##
+
+  SubnetPublicRDSAZ3:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+        Fn::Join:
+          - ""
+          -
+            - Ref: AWS::Region
+            - Fn::Select:
+                - 2
+                - Ref: AvailabilityZones
+      CidrBlock:
+        Fn::Join:
+          - .
+          -
+            - Ref: VPCSupernetPrefix
+            - 22.0/24
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - 'Public/Internet facing RDSs AZ '
+                - Fn::Select:
+                    - 2
+                    - Ref: AvailabilityZones
+                - ' ('
+                - Ref: VPCName
+                - )
+      VpcId:
+        Ref: VPC
+
+  AssociateSubnetPublicRDSAZ3RouteTableInternetGateway:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: RouteTableInternetGateway
+      SubnetId:
+        Ref: SubnetPublicRDSAZ3
+
+##
+# End Subnet Public RDS AZ 3 }
+##
+
+##
+# Begin Subnet Private RDS AZ 1 {
+##
+
+  SubnetPrivateRDSAZ1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+        Fn::Join:
+          - ""
+          -
+            - Ref: AWS::Region
+            - Fn::Select:
+                - 0
+                - Ref: AvailabilityZones
+      CidrBlock:
+        Fn::Join:
+          - .
+          -
+            - Ref: VPCSupernetPrefix
+            - 25.0/24
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - 'Private/internal RDSs AZ '
+                - Fn::Select:
+                    - 0
+                    - Ref: AvailabilityZones
+                - ' ('
+                - Ref: VPCName
+                - )
+      VpcId:
+        Ref: VPC
+
+  AssociateSubnetPrivateRDSAZ1RouteTableNATAZ1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: RouteTableNATAZ1
+      SubnetId:
+        Ref: SubnetPrivateRDSAZ1
+
+##
+# End Subnet Private RDS AZ 1 }
+##
+
+##
+# Begin Subnet Private RDS AZ 2 {
+##
+
+  SubnetPrivateRDSAZ2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+        Fn::Join:
+          - ""
+          -
+            - Ref: AWS::Region
+            - Fn::Select:
+                - 1
+                - Ref: AvailabilityZones
+      CidrBlock:
+        Fn::Join:
+          - .
+          -
+            - Ref: VPCSupernetPrefix
+            - 26.0/24
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - 'Private/internal RDSs AZ '
+                - Fn::Select:
+                    - 1
+                    - Ref: AvailabilityZones
+                - ' ('
+                - Ref: VPCName
+                - )
+      VpcId:
+        Ref: VPC
+
+  AssociateSubnetPrivateRDSAZ2RouteTableNATAZ2:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: RouteTableNATAZ2
+      SubnetId:
+        Ref: SubnetPrivateRDSAZ2
+
+##
+# End Subnet Private RDS AZ 2 }
+##
+
+##
+# Begin Subnet Private RDS AZ 3 {
+##
+
+  SubnetPrivateRDSAZ3:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+        Fn::Join:
+          - ""
+          -
+            - Ref: AWS::Region
+            - Fn::Select:
+                - 2
+                - Ref: AvailabilityZones
+      CidrBlock:
+        Fn::Join:
+          - .
+          -
+            - Ref: VPCSupernetPrefix
+            - 27.0/24
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - 'Private/internal RDSs AZ '
+                - Fn::Select:
+                    - 2
+                    - Ref: AvailabilityZones
+                - ' ('
+                - Ref: VPCName
+                - )
+      VpcId:
+        Ref: VPC
+
+  AssociateSubnetPrivateRDSAZ3RouteTableNATAZ1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: RouteTableNATAZ1
+      SubnetId:
+        Ref: SubnetPrivateRDSAZ3
+
+##
+# End Subnet Private RDS AZ 3 }
+##
+
+##
+# Begin Subnet Private Dev AZ 1 {
+##
+
+  SubnetPrivateDevAZ1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+        Fn::Join:
+          - ""
+          -
+            - Ref: AWS::Region
+            - Fn::Select:
+                - 0
+                - Ref: AvailabilityZones
+      CidrBlock:
+        Fn::Join:
+          - .
+          -
+            - Ref: VPCSupernetPrefix
+            - 70.0/24
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - 'Dev/misc AZ '
+                - Fn::Select:
+                    - 0
+                    - Ref: AvailabilityZones
+                - ', uses NAT ('
+                - Ref: VPCName
+                - )
+      VpcId:
+        Ref: VPC
+
+  AssociateSubnetPrivateDevAZ1RouteTableNATAZ1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: RouteTableNATAZ1
+      SubnetId:
+        Ref: SubnetPrivateDevAZ1
+
+##
+# End Subnet Private Dev AZ 1 }
+##
+
+##
+# Begin Subnet Private Dev AZ 2 {
+##
+
+  SubnetPrivateDevAZ2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+        Fn::Join:
+          - ""
+          -
+            - Ref: AWS::Region
+            - Fn::Select:
+                - 1
+                - Ref: AvailabilityZones
+      CidrBlock:
+        Fn::Join:
+          - .
+          -
+            - Ref: VPCSupernetPrefix
+            - 71.0/24
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - 'Dev/misc AZ '
+                - Fn::Select:
+                    - 1
+                    - Ref: AvailabilityZones
+                - ', uses NAT ('
+                - Ref: VPCName
+                - )
+      VpcId:
+        Ref: VPC
+
+  AssociateSubnetPrivateDevAZ2RouteTableNATAZ2:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: RouteTableNATAZ2
+      SubnetId:
+        Ref: SubnetPrivateDevAZ2
+
+##
+# End Subnet Private Dev AZ 2 }
+##
+
+##
+# Begin Subnet Private Dev AZ 3 {
+##
+
+  SubnetPrivateDevAZ3:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+        Fn::Join:
+          - ""
+          -
+            - Ref: AWS::Region
+            - Fn::Select:
+                - 2
+                - Ref: AvailabilityZones
+      CidrBlock:
+        Fn::Join:
+          - .
+          -
+            - Ref: VPCSupernetPrefix
+            - 72.0/24
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Join:
+              - ""
+              -
+                - 'Dev/misc AZ '
+                - Fn::Select:
+                    - 2
+                    - Ref: AvailabilityZones
+                - ', uses NAT ('
+                - Ref: VPCName
+                - )
+      VpcId:
+        Ref: VPC
+
+  AssociateSubnetPrivateDevAZ3RouteTableNATAZ1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: RouteTableNATAZ1
+      SubnetId:
+        Ref: SubnetPrivateDevAZ3
+
+##
+# End Subnet Private Dev AZ 3 }
+##
