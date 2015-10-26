@@ -1,0 +1,21 @@
+---
+
+Resources:
+
+  EndpointS3:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      RouteTableIds:
+        - Ref: RouteTableNATAZ1
+        - Ref: RouteTableNATAZ2
+        - Ref: RouteTableNATAZ3
+        - Ref: RouteTableInternetGateway
+      ServiceName:
+        Fn::Join:
+          - ""
+          -
+            - com.amazonaws.
+            - Ref: AWS::Region
+            - '.s3'
+      VpcId:
+        Ref: VPC
