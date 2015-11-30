@@ -1,0 +1,34 @@
+# RDS Redshift Subnet groups
+---
+
+Resources:
+
+  RedshiftSubnetPrivate:
+    Type: AWS::Redshift::ClusterSubnetGroup
+    Properties:
+      Description:
+        Fn::Join:
+          - ""
+          -
+            - Private (
+            - Ref: VPCName
+            - )
+      SubnetIds:
+        - Ref: SubnetPrivateAZ1
+        - Ref: SubnetPrivateAZ2
+        - Ref: SubnetPrivateAZ3
+
+  RedshiftSubnetPublic:
+    Type: AWS::Redshift::ClusterSubnetGroup
+    Properties:
+      Description:
+        Fn::Join:
+          - ""
+          -
+            - Public (
+            - Ref: VPCName
+            - )
+      SubnetIds:
+        - Ref: SubnetPublicAZ1
+        - Ref: SubnetPublicAZ2
+        - Ref: SubnetPublicAZ3
